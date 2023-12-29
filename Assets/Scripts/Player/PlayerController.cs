@@ -155,13 +155,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Animation event on first frame of the attack
+    public void AttackStart()
+    {
+        AnimatorClipInfo[] clipInfo = anim.GetCurrentAnimatorClipInfo(0);
+        float dir = sr.flipX ? -1 : 1;
+
+        if (clipInfo[0].clip.name == "Attack1")
+            rb.AddForce(new Vector2(300 * dir, 0));
+
+        if (clipInfo[0].clip.name == "Attack2")
+            rb.AddForce(new Vector2(400 * dir, 0));
+
+        if (clipInfo[0].clip.name == "Attack3")
+            rb.AddForce(new Vector2(500 * dir, 0));
+    }
+
+    //animation event to trigger hitboxes and the attack window to enter the next attack
     public void ResetAttackWindow()
     {
         //TODO turn on the appropriate collider for our attack depending on the attack animation we are in
 
         attackWindow = true;
     }
-
+    
+    //animation event to check to see what happens when we end our attack
     public void AttackEnd()
     {
         AnimatorClipInfo[] clipInfo = anim.GetCurrentAnimatorClipInfo(0);
