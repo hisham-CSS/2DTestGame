@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
     public event Action<float> OnPlayerCrouch;
     public event Action<float> OnPlayerMoveCanceled;
     public event Action<float> OnPlayerCrouchCanceled;
+    public event Action OnPlayerAttack;
     public event Action OnPlayerJump;
 
     PlayerControls input;
@@ -36,6 +37,7 @@ public class InputManager : MonoBehaviour
         input.Player.Move.performed += Move;
         input.Player.Move.canceled += Move;
         input.Player.Jump.performed += ctx => Jump();
+        input.Player.Attack.performed += ctx => Attack();
     }
 
     private void OnDisable()
@@ -43,6 +45,8 @@ public class InputManager : MonoBehaviour
         input.Disable();
         input.Player.Move.performed -= Move;
         input.Player.Move.canceled -= Move;
+        input.Player.Jump.performed -= ctx => Jump();
+        input.Player.Attack.performed -= ctx => Attack();
     }
     // Start is called before the first frame update
     void Start()
@@ -52,6 +56,11 @@ public class InputManager : MonoBehaviour
     void Jump()
     {
         OnPlayerJump?.Invoke();
+    }
+    
+    void Attack()
+    {
+        OnPlayerAttack?.Invoke();
     }
 
     void Move(InputAction.CallbackContext ctx)

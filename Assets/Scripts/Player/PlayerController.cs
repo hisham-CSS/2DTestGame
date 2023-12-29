@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce = 500.0f;
     float moveX;
     float inputY;
+    bool attackWindow = true;
+    int attackNumber = 0;
 
     //Animation Clips
     readonly string idleClip = "Idle";
@@ -41,6 +43,8 @@ public class PlayerController : MonoBehaviour
     readonly string fallingClip = "Fall";
     readonly string jumpClip = "Jump";
     readonly string crouchClip = "Crouch";
+    string attackClip = "Attack1";
+
 
 
     // Start is called before the first frame update
@@ -83,6 +87,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.OnPlayerJump += Jump;
         InputManager.Instance.OnPlayerCrouch += Crouch;
         InputManager.Instance.OnPlayerCrouchCanceled += CrouchCanceled;
+        InputManager.Instance.OnPlayerAttack += Attack;
     }
 
     private void OnDestroy()
@@ -92,6 +97,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.OnPlayerJump -= Jump;
         InputManager.Instance.OnPlayerCrouch -= Crouch;
         InputManager.Instance.OnPlayerCrouchCanceled -= CrouchCanceled;
+        InputManager.Instance.OnPlayerAttack -= Attack;
     }
     
     //set our crouching input
@@ -124,6 +130,55 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector2.up * jumpForce);
     }
 
+    void Attack()
+    {
+        //currently unable to attack if in air
+        if (!isGrounded) return;
+
+        if (attackWindow)
+        {
+            AnimatorClipInfo[] clipInfo = anim.GetCurrentAnimatorClipInfo(0);
+
+            //if we are not currently in an attack - this means we need to move to the first attack
+            if (!clipInfo[0].clip.name.Contains("Attack"))
+                attackNumber = 1;
+
+            //if we are in attack1, we need to move to the second attack
+            if (clipInfo[0].clip.name == "Attack1")
+                attackNumber = 2;
+
+            //if we are in attack2, we need to move into the third attack
+            if (clipInfo[0].clip.name == "Attack2")
+                attackNumber = 3;
+
+            attackWindow = false;
+        }
+    }
+
+    public void ResetAttackWindow()
+    {
+        //TODO turn on the appropriate collider for our attack depending on the attack animation we are in
+
+        attackWindow = true;
+    }
+
+    public void AttackEnd()
+    {
+        AnimatorClipInfo[] clipInfo = anim.GetCurrentAnimatorClipInfo(0);
+        if (clipInfo[0].clip.name.Contains(attackNumber.ToString()))
+        {
+            attackNumber = 0;
+            attackWindow = true;
+            attackClip = "Attack1";
+        }
+        else
+        {
+            //2 or 3 to the end of the attackClip string
+            attackClip = "Attack" + attackNumber.ToString();
+        }
+
+    }
+
     //Logic for the player and switching between states will happen here.
     private void Update()
     {
@@ -136,7 +191,10 @@ public class PlayerController : MonoBehaviour
         if (isGrounded) myState = Mathf.Abs(moveX) > 0 ? PlayerState.Run : PlayerState.Idle;
 
         //if we press down - we will instantly enter crouch as long as we aren't jumping
-        if (inputY == -1 && isGrounded) myState = PlayerState.Crouch; 
+        if (inputY == -1 && isGrounded) myState = PlayerState.Crouch;
+
+        //If we press the attack button and we are able to enter into an attack - we will do so here
+        if (attackNumber > 0) myState = PlayerState.Attack;
 
         CheckAnimations();
     }
@@ -169,6 +227,9 @@ public class PlayerController : MonoBehaviour
                 break;
             
             case PlayerState.Attack:
+                Debug.Log(attackClip);
+                if (anim.GetCurrentAnimatorClipInfo(0)[0].clip.name != attackClip)
+                    anim.Play(attackClip);
                 break;
             
             case PlayerState.Falling:
