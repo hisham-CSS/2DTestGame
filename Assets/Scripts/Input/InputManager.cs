@@ -9,8 +9,11 @@ public class InputManager : MonoBehaviour
 
     private static InputManager instance;
 
-    public event Action<Vector2> OnPlayerMove;
-    public event Action<Vector2> OnPlayerMoveCanceled;
+    public event Action<float> OnPlayerMove;
+    public event Action<float> OnPlayerCrouch;
+    public event Action<float> OnPlayerMoveCanceled;
+    public event Action<float> OnPlayerCrouchCanceled;
+    public event Action OnPlayerJump;
 
     PlayerControls input;
     
@@ -32,6 +35,7 @@ public class InputManager : MonoBehaviour
         input.Enable();
         input.Player.Move.performed += Move;
         input.Player.Move.canceled += Move;
+        input.Player.Jump.performed += ctx => Jump();
     }
 
     private void OnDisable()
@@ -43,15 +47,25 @@ public class InputManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //
-        //input.Player.Debug.performed += MoveScene;
+    }
+
+    void Jump()
+    {
+        OnPlayerJump?.Invoke();
     }
 
     void Move(InputAction.CallbackContext ctx)
     {
         Vector2 moveValue = ctx.ReadValue<Vector2>();
-        if (ctx.performed && Mathf.Abs(moveValue.x) > 0) OnPlayerMove?.Invoke(moveValue);
-        if (ctx.canceled) OnPlayerMoveCanceled?.Invoke(moveValue);
+
+        if (ctx.performed)
+        {
+            if (Mathf.Abs(moveValue.x) > 0) OnPlayerMove?.Invoke(moveValue.x);
+            if (moveValue.y == -1) OnPlayerCrouch?.Invoke(moveValue.y);
+        }
+        
+        if (moveValue.x == 0) OnPlayerMoveCanceled?.Invoke(moveValue.x);
+        if (moveValue.y == 0) OnPlayerCrouchCanceled?.Invoke(moveValue.y);
     }
 
     // Update is called once per frame

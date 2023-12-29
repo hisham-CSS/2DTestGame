@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Debug",
+                    "name": "Jump",
                     "type": "Button",
                     "id": "563875f4-9cd2-4b49-989f-e5518382b1db",
                     "expectedControlType": "Button",
@@ -28,7 +28,7 @@
                 {
                     "name": "2D Vector",
                     "id": "4a587d37-6ac1-4d04-8b5c-41616fdccd34",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -83,7 +83,7 @@
                 {
                     "name": "2D Vector",
                     "id": "817a2eb6-12ec-4d43-965c-7382cdbd9861",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -142,7 +142,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Debug",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
