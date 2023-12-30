@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9b3ac8d6-d76f-4a30-beb1-51f1ee0bfc6c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.2DTestGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2DTestGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/PlayerControls.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/PlayerControls.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/PlayerControls.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/PlayerControls.inputactions" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -101,7 +98,7 @@
       <workItem from="1703897537992" duration="49000" />
       <workItem from="1703897600228" duration="4336000" />
       <workItem from="1703945965504" duration="4777000" />
-      <workItem from="1703965406520" duration="1559000" />
+      <workItem from="1703965406520" duration="2597000" />
     </task>
     <servers />
   </component>

@@ -1213,6 +1213,7 @@ MonoBehaviour:
   jumpForce: 243
   SlamForce: 1000
   maxJumps: 2
+  SpeedTimer: 2
   DashDistance: 3000
   DashCounter: 0
   DashMaxCounter: 4

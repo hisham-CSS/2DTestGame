@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce = 500.0f;
     [SerializeField] float SlamForce = 0;
     [SerializeField] int maxJumps = 2;
+    public int SpeedTimer = 10;
     float moveX;
     float inputY;
     bool attackWindow = true;
@@ -50,6 +51,8 @@ public class PlayerController : MonoBehaviour
     public int DashCooldown = 5;
 
     public float JetPackForce = 5;
+    
+    
     //text vars
     public TMP_Text dashText;
 
@@ -128,14 +131,7 @@ public class PlayerController : MonoBehaviour
     {
         inputY = crouchInput;
 
-        if (inputY == -1)
-        {
-            if (!isGrounded)
-            {
-                rb.AddForce(Vector2.down * SlamForce);
-                particleSystem.Play();
-            }
-        }
+        Slam();
     }
     void CrouchCanceled(float crouchInput)
     {
@@ -180,6 +176,29 @@ public class PlayerController : MonoBehaviour
     void JetPack()
     {
         rb.AddForce(Vector2.up * JetPackForce);
+    }
+
+    void Slam()
+    {
+        SpeedTimer--;
+        if (inputY == -1)
+        {
+            
+            if (!isGrounded)
+            {
+                rb.AddForce(Vector2.down * SlamForce);
+                particleSystem.Play();
+            }
+
+            speed = 20;
+        }
+
+        if (SpeedTimer <= 0)
+        {
+            speed = 10;
+        }
+        
+        
     }
 
     void Attack()
@@ -254,6 +273,7 @@ public class PlayerController : MonoBehaviour
     //Logic for the player and switching between states will happen here.
     private void Update()
     {
+
         dashText.text = DashCounter.ToString();
         maxDashText.text = DashMaxCounter.ToString();
         
