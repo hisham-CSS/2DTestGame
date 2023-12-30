@@ -17,6 +17,8 @@ public class InputManager : MonoBehaviour
     public event Action OnPlayerAttack;
     public event Action OnPlayerJump;
     public event Action OnPlayerDash;
+
+    public event Action OnPlayerJetPack;
     PlayerControls input;
     
 
@@ -40,6 +42,7 @@ public class InputManager : MonoBehaviour
         input.Player.Jump.performed += ctx => Jump();
         input.Player.Attack.performed += ctx => Attack();
         input.Player.Dash.performed += ctx => Dash();
+        input.Player.Jetpack.performed += ctx => JetPack();
     }
 
     private void OnDisable()
@@ -50,6 +53,7 @@ public class InputManager : MonoBehaviour
         input.Player.Jump.performed -= ctx => Jump();
         input.Player.Attack.performed -= ctx => Attack();
         input.Player.Dash.performed -= ctx => Dash();
+        input.Player.Jetpack.performed -=  ctx => JetPack();
     }
     // Start is called before the first frame update
     void Start()
@@ -71,7 +75,10 @@ public class InputManager : MonoBehaviour
         OnPlayerDash?.Invoke();
     }
 
-
+    void JetPack()
+    {
+        OnPlayerJetPack?.Invoke();
+    }
 
     void Move(InputAction.CallbackContext ctx)
     {

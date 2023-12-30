@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float groundCheckRadius = 0.02f;
     bool isGrounded = false;
     Transform groundCheck;
-
+    
     //Variables
     [SerializeField] float speed = 10.0f;
     [SerializeField] float jumpForce = 500.0f;
@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
     public int DashCooldown = 5;
 
+    public float JetPackForce = 5;
     //text vars
     public TMP_Text dashText;
 
@@ -107,6 +108,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.OnPlayerCrouchCanceled += CrouchCanceled;
         InputManager.Instance.OnPlayerAttack += Attack;
         InputManager.Instance.OnPlayerDash += Dash;
+        InputManager.Instance.OnPlayerJetPack += JetPack;
     }
 
     private void OnDestroy()
@@ -118,6 +120,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.OnPlayerCrouchCanceled -= CrouchCanceled;
         InputManager.Instance.OnPlayerAttack -= Attack;
         InputManager.Instance.OnPlayerDash -= Dash;
+        InputManager.Instance.OnPlayerJetPack -= JetPack;
     }
 
     //set our crouching input
@@ -173,7 +176,11 @@ public class PlayerController : MonoBehaviour
         if (DashCounter < DashMaxCounter)
             rb.AddForce(new Vector2(DashDistance * dir, 0));
     }
-    
+
+    void JetPack()
+    {
+        rb.AddForce(Vector2.up * JetPackForce);
+    }
 
     void Attack()
     {

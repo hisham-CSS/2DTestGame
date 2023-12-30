@@ -1217,6 +1217,7 @@ MonoBehaviour:
   DashCounter: 0
   DashMaxCounter: 4
   DashCooldown: 5
+  JetPackForce: 100
   dashText: {fileID: 1069031135}
   maxDashText: {fileID: 171502510}
   particleSystem: {fileID: 62852037}
