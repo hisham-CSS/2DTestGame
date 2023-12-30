@@ -106,15 +106,11 @@ public class PlayerController : MonoBehaviour
     {
         inputY = crouchInput;
 
-        if (inputY == crouchInput)
+        if (inputY == -1)
         {
             if (!isGrounded)
             {
-                if (myState == PlayerState.Falling)
-                {
-                    rb.AddForce(Vector2.down * SlamForce);
-                    particleSystem.Play();
-                }
+                rb.AddForce(Vector2.down * SlamForce);
             }
         }
     }
