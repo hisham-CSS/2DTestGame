@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,7 +16,7 @@ public class InputManager : MonoBehaviour
     public event Action<float> OnPlayerCrouchCanceled;
     public event Action OnPlayerAttack;
     public event Action OnPlayerJump;
-
+    public event Action OnPlayerDash;
     PlayerControls input;
     
 
@@ -38,6 +39,7 @@ public class InputManager : MonoBehaviour
         input.Player.Move.canceled += Move;
         input.Player.Jump.performed += ctx => Jump();
         input.Player.Attack.performed += ctx => Attack();
+        input.Player.Dash.performed += ctx => Dash();
     }
 
     private void OnDisable()
@@ -47,6 +49,7 @@ public class InputManager : MonoBehaviour
         input.Player.Move.canceled -= Move;
         input.Player.Jump.performed -= ctx => Jump();
         input.Player.Attack.performed -= ctx => Attack();
+        input.Player.Dash.performed -= ctx => Dash();
     }
     // Start is called before the first frame update
     void Start()
@@ -62,6 +65,13 @@ public class InputManager : MonoBehaviour
     {
         OnPlayerAttack?.Invoke();
     }
+    
+    void Dash()
+    {
+        OnPlayerDash?.Invoke();
+    }
+
+
 
     void Move(InputAction.CallbackContext ctx)
     {
@@ -76,6 +86,7 @@ public class InputManager : MonoBehaviour
         if (moveValue.x == 0) OnPlayerMoveCanceled?.Invoke(moveValue.x);
         if (moveValue.y == 0) OnPlayerCrouchCanceled?.Invoke(moveValue.y);
     }
+
 
     // Update is called once per frame
     void Update()

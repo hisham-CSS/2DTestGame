@@ -1213,6 +1213,10 @@ MonoBehaviour:
   jumpForce: 243
   SlamForce: 1000
   maxJumps: 2
+  DashDistance: 3000
+  DashCounter: 0
+  DashMaxCounter: 4
+  DashCooldown: 5
   particleSystem: {fileID: 62852037}
 --- !u!61 &62852035
 BoxCollider2D:
@@ -1406,7 +1410,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0

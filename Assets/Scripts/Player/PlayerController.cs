@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -39,7 +40,14 @@ public class PlayerController : MonoBehaviour
     bool attackWindow = true;
     int attackNumber = 0;
     int jumpCount = 0;
-    
+
+    public float DashDistance = 40;
+
+    public int DashCounter = 0;
+
+    public int DashMaxCounter = 5;
+
+    public int DashCooldown = 5;
     //Animation Clips
     readonly string idleClip = "Idle";
     readonly string runClip = "Run";
@@ -92,6 +100,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.OnPlayerCrouch += Crouch;
         InputManager.Instance.OnPlayerCrouchCanceled += CrouchCanceled;
         InputManager.Instance.OnPlayerAttack += Attack;
+        InputManager.Instance.OnPlayerDash += Dash;
     }
 
     private void OnDestroy()
@@ -102,6 +111,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.OnPlayerCrouch -= Crouch;
         InputManager.Instance.OnPlayerCrouchCanceled -= CrouchCanceled;
         InputManager.Instance.OnPlayerAttack -= Attack;
+        InputManager.Instance.OnPlayerDash -= Dash;
     }
 
     //set our crouching input
@@ -147,6 +157,17 @@ public class PlayerController : MonoBehaviour
 
         rb.AddForce(Vector2.up * jumpForce);
     }
+    
+    void Dash()
+    {
+        DashCounter++;
+        float dir = sr.flipX ? -1 : 1;
+        if (DashCounter >= DashMaxCounter) return;
+        if (isGrounded) return;
+        if (DashCounter < DashMaxCounter)
+            rb.AddForce(new Vector2(DashDistance * dir, 0));
+    }
+    
 
     void Attack()
     {
@@ -172,6 +193,8 @@ public class PlayerController : MonoBehaviour
             attackWindow = false;
         }
     }
+
+
 
     //Animation event on first frame of the attack
     public void AttackStart()
@@ -218,6 +241,11 @@ public class PlayerController : MonoBehaviour
     //Logic for the player and switching between states will happen here.
     private void Update()
     {
+        if (isGrounded)
+        {
+            DashCooldown--;
+            DashCounter = 0;
+        }
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
 
         //if we aren't grounded - we are either falling or jumping
