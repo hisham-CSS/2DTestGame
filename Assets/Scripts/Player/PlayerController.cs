@@ -36,7 +36,10 @@ public class PlayerController : MonoBehaviour
     float inputY;
     bool attackWindow = true;
     int attackNumber = 0;
+    public int jumpCount = 0;
    public float SlamForce = 0;
+
+   public int maxJumps = 2;
     //Animation Clips
     readonly string idleClip = "Idle";
     readonly string runClip = "Run";
@@ -111,6 +114,7 @@ public class PlayerController : MonoBehaviour
             if (!isGrounded)
             {
                 rb.AddForce(Vector2.down * SlamForce);
+                particleSystem.Play();
             }
         }
     }
@@ -134,9 +138,17 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         //can't jump if we aren't grounded
-        if (!isGrounded) return;
+        if (jumpCount > maxJumps)
+            jumpCount = 0;
+        if (maxJumps > jumpCount)
+        {
+            rb.AddForce(Vector2.up * jumpForce);
+            jumpCount++;
+        }
 
-        rb.AddForce(Vector2.up * jumpForce);
+        if (isGrounded)
+            jumpCount = 0;
+
     }
 
     void Attack()
@@ -209,6 +221,7 @@ public class PlayerController : MonoBehaviour
     //Logic for the player and switching between states will happen here.
     private void Update()
     {
+      
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
 
         //if we aren't grounded - we are either falling or jumping
