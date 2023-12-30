@@ -32,14 +32,14 @@ public class PlayerController : MonoBehaviour
     //Variables
     [SerializeField] float speed = 10.0f;
     [SerializeField] float jumpForce = 500.0f;
+    [SerializeField] float SlamForce = 0;
+    [SerializeField] int maxJumps = 2;
     float moveX;
     float inputY;
     bool attackWindow = true;
     int attackNumber = 0;
-    public int jumpCount = 0;
-   public float SlamForce = 0;
-
-   public int maxJumps = 2;
+    int jumpCount = 0;
+    
     //Animation Clips
     readonly string idleClip = "Idle";
     readonly string runClip = "Run";
@@ -137,18 +137,15 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
+        jumpCount++;
+        
         //can't jump if we aren't grounded
-        if (jumpCount > maxJumps)
-            jumpCount = 0;
-        if (maxJumps > jumpCount)
-        {
-            rb.AddForce(Vector2.up * jumpForce);
-            jumpCount++;
-        }
+        if (jumpCount >= maxJumps) return;
 
-        if (isGrounded)
-            jumpCount = 0;
+        //stop movement on the y-axis before adding force again
+        rb.velocity = new Vector2(rb.velocity.x, 0);
 
+        rb.AddForce(Vector2.up * jumpForce);
     }
 
     void Attack()
@@ -221,14 +218,17 @@ public class PlayerController : MonoBehaviour
     //Logic for the player and switching between states will happen here.
     private void Update()
     {
-      
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
 
         //if we aren't grounded - we are either falling or jumping
         if (!isGrounded) myState = rb.velocity.y > 0 ? PlayerState.Jump : PlayerState.Falling;
-        
+
         //if we are grounded - we are either idle or running
-        if (isGrounded) myState = Mathf.Abs(moveX) > 0 ? PlayerState.Run : PlayerState.Idle;
+        if (isGrounded)
+        { 
+            myState = Mathf.Abs(moveX) > 0 ? PlayerState.Run : PlayerState.Idle;
+            jumpCount = 0;
+        }
 
         //if we press down - we will instantly enter crouch as long as we aren't jumping
         if (inputY == -1 && isGrounded) myState = PlayerState.Crouch;
