@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using TMPro;
 [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
 public class PlayerController : MonoBehaviour
 {
@@ -48,6 +48,11 @@ public class PlayerController : MonoBehaviour
     public int DashMaxCounter = 5;
 
     public int DashCooldown = 5;
+
+    //text vars
+    public TMP_Text dashText;
+
+    public TMP_Text maxDashText;
     //Animation Clips
     readonly string idleClip = "Idle";
     readonly string runClip = "Run";
@@ -77,6 +82,7 @@ public class PlayerController : MonoBehaviour
             jumpForce = 400;
             Debug.Log("JumpForce has been set to a default value " + jumpForce.ToString());
         }
+
 
         //create groundcheck object if null and set it to be childed to the player object
         if (groundCheck == null)
@@ -241,6 +247,9 @@ public class PlayerController : MonoBehaviour
     //Logic for the player and switching between states will happen here.
     private void Update()
     {
+        dashText.text = DashCounter.ToString();
+        maxDashText.text = DashMaxCounter.ToString();
+        
         if (isGrounded)
         {
             DashCooldown--;
