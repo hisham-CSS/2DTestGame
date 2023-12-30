@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     float inputY;
     bool attackWindow = true;
     int attackNumber = 0;
-
+   public float SlamForce = 0;
     //Animation Clips
     readonly string idleClip = "Idle";
     readonly string runClip = "Run";
@@ -45,7 +45,8 @@ public class PlayerController : MonoBehaviour
     readonly string crouchClip = "Crouch";
     string attackClip = "Attack1";
 
-
+    //Stuff to call
+    public ParticleSystem particleSystem;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +54,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-
+        particleSystem = GetComponent<ParticleSystem>();
         if (speed <= 0)
         {
             speed = 10.0f;
@@ -72,7 +73,7 @@ public class PlayerController : MonoBehaviour
             GameObject obj = new GameObject();
             obj.name = "GroundCheck";
             obj.transform.parent = transform;
-            obj.transform.localPosition = new Vector3(0,0,0);
+            obj.transform.localPosition = new Vector3(0, 0, 0);
             groundCheck = obj.transform;
         }
 
@@ -99,11 +100,23 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.OnPlayerCrouchCanceled -= CrouchCanceled;
         InputManager.Instance.OnPlayerAttack -= Attack;
     }
-    
+
     //set our crouching input
     void Crouch(float crouchInput)
     {
         inputY = crouchInput;
+
+        if (inputY == crouchInput)
+        {
+            if (!isGrounded)
+            {
+                if (myState == PlayerState.Falling)
+                {
+                    rb.AddForce(Vector2.down * SlamForce);
+                    particleSystem.Play();
+                }
+            }
+        }
     }
     void CrouchCanceled(float crouchInput)
     {
@@ -178,7 +191,7 @@ public class PlayerController : MonoBehaviour
 
         attackWindow = true;
     }
-    
+
     //animation event to check to see what happens when we end our attack
     public void AttackEnd()
     {
@@ -211,7 +224,7 @@ public class PlayerController : MonoBehaviour
         //if we press down - we will instantly enter crouch as long as we aren't jumping
         if (inputY == -1 && isGrounded) myState = PlayerState.Crouch;
 
-        //If we press the attack button and we are able to enter into an attack - we will do so here
+        //If we press the attack bu`1   tton and we are able to enter into an attack - we will do so here
         if (attackNumber > 0) myState = PlayerState.Attack;
 
         CheckAnimations();
