@@ -106,24 +106,24 @@ public class PlayerController : MonoBehaviour
 
         InputManager.Instance.OnPlayerMove += Move;
         InputManager.Instance.OnPlayerMoveCanceled += MoveCanceled;
-        InputManager.Instance.OnPlayerJump += Jump;
+        //InputManager.Instance.OnPlayerJump += Jump;
         InputManager.Instance.OnPlayerCrouch += Crouch;
         InputManager.Instance.OnPlayerCrouchCanceled += CrouchCanceled;
-        InputManager.Instance.OnPlayerAttack += Attack;
-        InputManager.Instance.OnPlayerDash += Dash;
-        InputManager.Instance.OnPlayerJetPack += JetPack;
+        //InputManager.Instance.OnPlayerAttack += Attack;
+        //InputManager.Instance.OnPlayerDash += Dash;
+        //InputManager.Instance.OnPlayerJetPack += JetPack;
     }
 
     private void OnDestroy()
     {
         InputManager.Instance.OnPlayerMove -= Move;
         InputManager.Instance.OnPlayerMoveCanceled -= MoveCanceled;
-        InputManager.Instance.OnPlayerJump -= Jump;
+        //InputManager.Instance.OnPlayerJump -= Jump;
         InputManager.Instance.OnPlayerCrouch -= Crouch;
         InputManager.Instance.OnPlayerCrouchCanceled -= CrouchCanceled;
-        InputManager.Instance.OnPlayerAttack -= Attack;
-        InputManager.Instance.OnPlayerDash -= Dash;
-        InputManager.Instance.OnPlayerJetPack -= JetPack;
+        //InputManager.Instance.OnPlayerAttack -= Attack;
+        //InputManager.Instance.OnPlayerDash -= Dash;
+        // InputManager.Instance.OnPlayerJetPack -= JetPack;
     }
 
     //set our crouching input

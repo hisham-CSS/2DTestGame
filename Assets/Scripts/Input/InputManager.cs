@@ -14,11 +14,12 @@ public class InputManager : MonoBehaviour
     public event Action<float> OnPlayerCrouch;
     public event Action<float> OnPlayerMoveCanceled;
     public event Action<float> OnPlayerCrouchCanceled;
-    public event Action OnPlayerAttack;
-    public event Action OnPlayerJump;
-    public event Action OnPlayerDash;
-
-    public event Action OnPlayerJetPack;
+    public event Action<bool> OnPlayerAttack;
+    public event Action<bool> OnPlayerJump;
+    public event Action<bool> OnPlayerDash;
+    public event Action<bool> OnPlayerJetPack;
+    
+    
     PlayerControls input;
     
 
@@ -39,10 +40,19 @@ public class InputManager : MonoBehaviour
         input.Enable();
         input.Player.Move.performed += Move;
         input.Player.Move.canceled += Move;
-        input.Player.Jump.performed += ctx => Jump();
-        input.Player.Attack.performed += ctx => Attack();
-        input.Player.Dash.performed += ctx => Dash();
-        input.Player.Jetpack.performed += ctx => JetPack();
+
+        input.Player.Jump.started += Jump;
+        input.Player.Jump.canceled += Jump;
+
+        input.Player.Attack.started += Attack;
+        input.Player.Attack.canceled += Attack;
+
+        input.Player.Dash.started += Dash;
+        input.Player.Dash.canceled += Dash;
+
+        input.Player.Jetpack.started += JetPack;
+        input.Player.Jetpack.canceled += JetPack;
+
     }
 
     private void OnDisable()
@@ -50,34 +60,42 @@ public class InputManager : MonoBehaviour
         input.Disable();
         input.Player.Move.performed -= Move;
         input.Player.Move.canceled -= Move;
-        input.Player.Jump.performed -= ctx => Jump();
-        input.Player.Attack.performed -= ctx => Attack();
-        input.Player.Dash.performed -= ctx => Dash();
-        input.Player.Jetpack.performed -=  ctx => JetPack();
+
+        input.Player.Jump.started -= Jump;
+        input.Player.Jump.canceled -= Jump;
+
+        input.Player.Attack.started -= Attack;
+        input.Player.Attack.canceled -= Attack;
+
+        input.Player.Dash.started -= Dash;
+        input.Player.Dash.canceled -= Dash;
+
+        input.Player.Jetpack.started -= JetPack;
+        input.Player.Jetpack.canceled -= JetPack;
     }
     // Start is called before the first frame update
     void Start()
     {
     }
 
-    void Jump()
+    void Jump(InputAction.CallbackContext ctx)
     {
-        OnPlayerJump?.Invoke();
+        OnPlayerJump?.Invoke(ctx.ReadValueAsButton());
     }
     
-    void Attack()
+    void Attack(InputAction.CallbackContext ctx)
     {
-        OnPlayerAttack?.Invoke();
+        OnPlayerAttack?.Invoke(ctx.ReadValueAsButton());
     }
     
-    void Dash()
+    void Dash(InputAction.CallbackContext ctx)
     {
-        OnPlayerDash?.Invoke();
+        OnPlayerDash?.Invoke(ctx.ReadValueAsButton());
     }
 
-    void JetPack()
+    void JetPack(InputAction.CallbackContext ctx)
     {
-        OnPlayerJetPack?.Invoke();
+        OnPlayerJetPack?.Invoke(ctx.ReadValueAsButton());
     }
 
     void Move(InputAction.CallbackContext ctx)

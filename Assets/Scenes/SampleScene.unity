@@ -1067,8 +1067,8 @@ GameObject:
   - component: {fileID: 62852030}
   - component: {fileID: 62852029}
   - component: {fileID: 62852033}
-  - component: {fileID: 62852034}
   - component: {fileID: 62852035}
+  - component: {fileID: 62852038}
   - component: {fileID: 62852037}
   - component: {fileID: 62852036}
   m_Layer: 0
@@ -1193,35 +1193,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &62852034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 62852028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2797c2fe82c7d4347a70b46c6f55efba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGroundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  groundCheckRadius: 0.2
-  speed: -100
-  jumpForce: 243
-  SlamForce: 1000
-  maxJumps: 2
-  SpeedTimer: 2
-  DashDistance: 3000
-  DashCounter: 0
-  DashMaxCounter: 4
-  DashCooldown: 5
-  JetPackForce: 100
-  dashText: {fileID: 1069031135}
-  maxDashText: {fileID: 171502510}
-  particleSystem: {fileID: 62852037}
 --- !u!61 &62852035
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6064,6 +6035,31 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &62852038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62852028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33b6e386d7a007042a41aabd00642cbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGroundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  groundCheckRadius: 0.09
+  isGrounded: 0
+  speed: 10
+  slamForce: 1000
+  jumpForce: 250
+  maxJumps: 2
+  DashDistance: 40
+  DashCounter: 0
+  DashMaxCounter: 5
+  DashCooldown: 5
 --- !u!1 &159167184
 GameObject:
   m_ObjectHideFlags: 0
@@ -7710,7 +7706,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 0
-  orthographic size: 1.02
+  orthographic size: 1.04
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
