@@ -13,11 +13,14 @@ public class PlayerStateFactory
     PlayerCrouchState crouchState;
     PlayerAttackState atttackState;
     PlayerDashState dashState;
+    PlayerJetpackState jetpackState;
 
     //Construtor which requires the statemachine to provide a context
     public PlayerStateFactory(PlayerStateMachine currentContext)
     {
         context = currentContext;
+
+        //Creation of the concrete states
         fallState = new PlayerFallingState(context, this);
         jumpState = new PlayerJumpState(context, this);
         runState = new PlayerRunState(context, this);
@@ -25,10 +28,11 @@ public class PlayerStateFactory
         idleState = new PlayerIdleState(context, this);
         crouchState = new PlayerCrouchState(context, this);
         atttackState = new PlayerAttackState(context, this);
-        dashState = new PlayerDashState(context, this);    
+        dashState = new PlayerDashState(context, this);
+        jetpackState = new PlayerJetpackState(context, this);
     }
 
-    //State Getters - these are used by the playerstatemachine and other states to set our states
+    //Concrete State Getters - these are used by the playerstatemachine and other states to set our states
     public PlayerBaseState Fall()
     {
         return fallState;
@@ -67,5 +71,10 @@ public class PlayerStateFactory
     public PlayerDashState Dash()
     {
         return dashState;
+    }
+
+    public PlayerJetpackState Jetpack()
+    {
+        return jetpackState;
     }
 }

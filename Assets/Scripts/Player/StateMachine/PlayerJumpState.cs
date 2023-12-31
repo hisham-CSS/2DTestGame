@@ -25,8 +25,14 @@ public class PlayerJumpState : PlayerBaseState
         if (ctx.DashPressed)
         {
             SwitchState(factory.Dash());
+            return;
         }
-            
+
+        if (ctx.JetpackPressed)
+        {
+            SwitchState(factory.Jetpack());
+            return;
+        }
     }
 
     public override void EnterState()
