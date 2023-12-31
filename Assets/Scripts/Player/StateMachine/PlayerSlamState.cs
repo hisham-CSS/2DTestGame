@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerSlamState : PlayerBaseState
 {
+    readonly string fallingClip = "Fall";
+
     public PlayerSlamState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) { }
     public override void CheckSwitchState()
     {
@@ -16,6 +18,7 @@ public class PlayerSlamState : PlayerBaseState
     public override void EnterState()
     {
         ctx.Rb.AddForce(Vector2.down * ctx.SlamForce);
+        ctx.Anim.Play(fallingClip);
     }
 
     public override void ExitState()

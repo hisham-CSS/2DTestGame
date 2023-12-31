@@ -12,7 +12,13 @@ public class PlayerJumpState : PlayerBaseState
     {
         if (ctx.Rb.velocity.y < 0)
         {
-            SwitchState(factory.Falling());
+            SwitchState(factory.Fall());
+            return;
+        }
+
+        if (ctx.moveInput.y == -1)
+        {
+            SwitchState(factory.Slam());
             return;
         }
     }

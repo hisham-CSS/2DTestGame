@@ -1,14 +1,13 @@
 public class PlayerStateFactory
 {
     readonly PlayerStateMachine context;
-
-    public PlayerJumpState jumpState;
-    public PlayerFallingState fallState;
-    public PlayerRunState runState;
-    public PlayerSlamState slamState;
-    public PlayerIdleState idleState;
-    public PlayerCrouchState crouchState;
-    public PlayerAttackState atttackState;
+    PlayerJumpState jumpState;
+    PlayerFallingState fallState;
+    PlayerRunState runState;
+    PlayerSlamState slamState;
+    PlayerIdleState idleState;
+    PlayerCrouchState crouchState;
+    PlayerAttackState atttackState;
 
     public PlayerStateFactory(PlayerStateMachine currentContext)
     {
@@ -21,7 +20,7 @@ public class PlayerStateFactory
         crouchState = new PlayerCrouchState(context, this);
         atttackState = new PlayerAttackState(context, this);
     }
-    public PlayerBaseState Falling()
+    public PlayerBaseState Fall()
     {
         return fallState;
     }

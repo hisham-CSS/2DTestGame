@@ -86,7 +86,7 @@ public class PlayerStateMachine : MonoBehaviour
         anim = GetComponent<Animator>();
 
         states = new PlayerStateFactory(this);
-        currentState = states.Falling();
+        currentState = states.Fall();
         currentState.EnterState();
 
         if (speed <= 0)
@@ -191,7 +191,7 @@ public class PlayerStateMachine : MonoBehaviour
     void FixedUpdate()
     {
         //if we are running/jumping/falling = we can move left or right - otherwise we do not move left or right
-        rb.velocity = (currentState == states.runState || currentState == states.jumpState || currentState == states.fallState) ? new Vector2(moveX, rb.velocity.y) : new Vector2(0, rb.velocity.y);
+        rb.velocity = (currentState == states.Run() || currentState == states.Jump() || currentState == states.Fall()) ? new Vector2(moveX, rb.velocity.y) : new Vector2(0, rb.velocity.y);
     }
 
     //ANIMATION EVENTS THAT CANNOT BE REMOVED FROM THE STATE MACHINE
