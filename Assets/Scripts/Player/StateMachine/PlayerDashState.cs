@@ -9,16 +9,25 @@ public class PlayerDashState : PlayerBaseState
     public PlayerDashState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) { }
     public override void CheckSwitchState()
     {
-        AnimatorStateInfo stateInfo = ctx.Anim.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo stateInfo = ctx.Anim.GetCurrentAnimatorStateInfo(0);        
         if (stateInfo.normalizedTime > 1)
         {
+            if (ctx.Rb.velocity.y < 0)
+            {
+                SwitchState(factory.Fall());
+                return;
+            }
             SwitchState(factory.Idle());
             return;
         }
-
-        if (ctx.DashPressed)
-            HandleDash();
         
+
+        if (ctx.AttackPressed && ctx.IsGrounded)
+        {
+            SwitchState(factory.Attack());
+            return;
+        }
+ 
     }
 
     public override void EnterState()
@@ -39,6 +48,8 @@ public class PlayerDashState : PlayerBaseState
     void HandleDash()
     {
         ctx.DashCounter++;
+
+        Debug.Log(ctx.DashCounter);
 
         if (ctx.DashCounter >= ctx.DashMaxCounter) return;
 

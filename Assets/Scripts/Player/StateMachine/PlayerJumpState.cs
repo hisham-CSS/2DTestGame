@@ -32,7 +32,7 @@ public class PlayerJumpState : PlayerBaseState
     public override void EnterState()
     {
         ctx.JumpCount++;
-        Debug.Log(ctx.JumpCount);
+        //Debug.Log(ctx.JumpCount);
         if (ctx.JumpCount == 1)
             ctx.Anim.Play(jumpClip);
         if (ctx.JumpCount > 1)
