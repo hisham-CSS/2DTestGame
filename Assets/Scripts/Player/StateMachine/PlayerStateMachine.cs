@@ -29,7 +29,6 @@ public class PlayerStateMachine : MonoBehaviour
     float inputY;
     public Vector2 moveInput { get => new Vector2(moveX, inputY); }
 
-
     //attack variables
     bool attackWindow = true;
     public bool AttackWindow { get => attackWindow; set => attackWindow = value; }
@@ -59,6 +58,8 @@ public class PlayerStateMachine : MonoBehaviour
     bool dashPressed = false;
     public bool DashPressed => dashPressed;
 
+    bool jetpackPressed;
+    public bool JetpackPressed => jetpackPressed;
 
     //Dash Variables
     [SerializeField] float dashDistance = 40;
@@ -73,10 +74,9 @@ public class PlayerStateMachine : MonoBehaviour
     int dashCooldown = 5;
     public int DashCooldown => dashCooldown;
 
-
     //Jetpack Variables
-    bool jetpackPressed;
-    public bool JetpackPressed => jetpackPressed;
+    int jetpackFuel = 100;
+    public int JetpackFuel { get => jetpackFuel; set => jetpackFuel = value; }
 
     //Store current state and the factory that makes the states
     PlayerBaseState currentState;
@@ -206,6 +206,12 @@ public class PlayerStateMachine : MonoBehaviour
 
         //our states update function is called here to tie it to the state machines update function
         currentState.UpdateState();
+
+        if (isGrounded && jetpackFuel < 100)
+        {
+            jetpackFuel++;
+            Debug.Log(jetpackFuel);
+        }
     }
 
     void FixedUpdate()

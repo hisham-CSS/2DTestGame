@@ -9,7 +9,7 @@ public class PlayerJetpackState : PlayerBaseState
     public override void CheckSwitchState()
     {
         //if we release jetpack button exit state - TODO: add a fuel variable to depelete over time while in jetpack state
-        if (!ctx.JetpackPressed)
+        if (!ctx.JetpackPressed || ctx.JetpackFuel <= 0)
         {           
             SwitchState(factory.Fall());
             return;   
@@ -30,7 +30,7 @@ public class PlayerJetpackState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchState();
-        Debug.Log(ctx.JetpackPressed);
         ctx.Rb.velocity = new Vector2(ctx.Rb.velocity.x, 2);
+        ctx.JetpackFuel--;
     }
 }
