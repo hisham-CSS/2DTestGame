@@ -74,6 +74,10 @@ public class PlayerStateMachine : MonoBehaviour
     public int DashCooldown => dashCooldown;
 
 
+    //Jetpack Variables
+    bool jetpackPressed;
+    public bool JetpackPressed => jetpackPressed;
+
     //Store current state and the factory that makes the states
     PlayerBaseState currentState;
     PlayerStateFactory states;
@@ -134,6 +138,7 @@ public class PlayerStateMachine : MonoBehaviour
         InputManager.Instance.OnPlayerCrouchCanceled += CrouchCanceled;
         InputManager.Instance.OnPlayerAttack += Attack;
         InputManager.Instance.OnPlayerDash += Dash;
+        InputManager.Instance.OnPlayerJetPack += Jetpack;
     }
 
     private void OnDestroy()
@@ -187,6 +192,12 @@ public class PlayerStateMachine : MonoBehaviour
         attackPressed = isPressed;
     }
 
+    //set our jetpack input
+    void Jetpack(bool isPressed)
+    {
+        jetpackPressed = isPressed;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -199,8 +210,8 @@ public class PlayerStateMachine : MonoBehaviour
 
     void FixedUpdate()
     {
-        //if we are running/jumping/falling = we can move left or right - otherwise we do not move left or right
-        rb.velocity = (currentState == states.Run() || currentState == states.Jump() || currentState == states.Fall()) ? new Vector2(moveX, rb.velocity.y) : new Vector2(0, rb.velocity.y);
+        //if we are running/jumping/falling/jetpack = we can move left or right - otherwise we do not move left or right
+        rb.velocity = (currentState == states.Run() || currentState == states.Jump() || currentState == states.Fall() || currentState == states.Jetpack()) ? new Vector2(moveX, rb.velocity.y) : new Vector2(0, rb.velocity.y);
     }
 
     //Slam change stuff

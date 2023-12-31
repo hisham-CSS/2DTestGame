@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerJetpackState : PlayerBaseState
+{
+    public PlayerJetpackState (PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) { }
+
+    public override void CheckSwitchState()
+    {
+        //if we release jetpack button exit state - TODO: add a fuel variable to depelete over time while in jetpack state
+        if (!ctx.JetpackPressed)
+        {           
+            SwitchState(factory.Fall());
+            return;   
+        }
+    }
+
+    public override void EnterState()
+    {
+        //play a jetpack animation
+        ctx.Anim.Play("Idle");
+    }
+
+    public override void ExitState()
+    {
+        
+    }
+
+    public override void UpdateState()
+    {
+        CheckSwitchState();
+        Debug.Log(ctx.JetpackPressed);
+        ctx.Rb.velocity = new Vector2(ctx.Rb.velocity.x, 2);
+    }
+}

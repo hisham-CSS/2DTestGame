@@ -32,6 +32,13 @@ public class PlayerIdleState : PlayerBaseState
             return;
         }
 
+        if (ctx.JetpackPressed)
+        {
+            SwitchState(factory.Jetpack());
+            return;
+        }
+
+
         if (Mathf.Abs(ctx.moveInput.x) > 0)
         {
             SwitchState(factory.Run());
