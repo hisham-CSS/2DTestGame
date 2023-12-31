@@ -26,6 +26,12 @@ public class PlayerFallingState : PlayerBaseState
         if (ctx.moveInput.y == -1)
         {
             SwitchState(factory.Slam());
+            return;
+        }
+
+        if (ctx.DashPressed)
+        {
+            SwitchState(factory.Dash());
         }
     }
 

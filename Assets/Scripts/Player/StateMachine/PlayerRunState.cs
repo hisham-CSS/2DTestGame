@@ -25,10 +25,17 @@ public class PlayerRunState : PlayerBaseState
             SwitchState(factory.Crouch());
             return;
         }
+        
+        if (ctx.DashPressed)
+        {
+            SwitchState(factory.Dash());
+            return;
+        }
 
-        if(ctx.moveInput.x == 0)
+        if (ctx.moveInput.x == 0)
         {
             SwitchState(factory.Idle());
+            return;
         }
     }
 

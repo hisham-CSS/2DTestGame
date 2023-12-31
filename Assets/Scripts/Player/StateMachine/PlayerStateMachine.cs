@@ -13,6 +13,7 @@ public class PlayerStateMachine : MonoBehaviour
     SpriteRenderer sr;
     public SpriteRenderer Sr => sr;
 
+
     //Groundcheck stuff
     Transform groundCheck;
     [SerializeField] LayerMask isGroundLayer;
@@ -58,11 +59,18 @@ public class PlayerStateMachine : MonoBehaviour
     public bool DashPressed => dashPressed;
 
 
-    //old variables that I will work with.
-    public float DashDistance = 40;
-    public int DashCounter = 0;
-    public int DashMaxCounter = 5;
-    public int DashCooldown = 5;
+    //Dash Variables
+    float dashDistance = 40;
+    public float DashDistance => dashDistance;
+    
+    int dashCounter = 0;
+    public int DashCounter => dashCounter;
+    
+    int dashMaxCounter = 5;
+    public int DashMaxCounter => dashMaxCounter;
+    
+    int dashCooldown = 5;
+    public int DashCooldown => dashCooldown;
 
 
     //Store current state and the factory that makes the states
@@ -160,10 +168,13 @@ public class PlayerStateMachine : MonoBehaviour
         moveX = moveInput;
     }
 
+    //set our jump input
     void Jump(bool isPressed)
     {
         jumpPressed = isPressed;
     }
+
+    //set our dash input
     void Dash(bool isPressed)
     {
         dashPressed = isPressed;
@@ -176,6 +187,7 @@ public class PlayerStateMachine : MonoBehaviour
         //    rb.AddForce(new Vector2(DashDistance * dir, 0));
     }
 
+    //set our attack input
     void Attack(bool isPressed)
     {
         attackPressed = isPressed;
@@ -184,7 +196,9 @@ public class PlayerStateMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //isGrounded still needs to be checked every tick
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
+        //our states update function is called here to tie it to the state machines update function
         currentState.UpdateState();
     }
 

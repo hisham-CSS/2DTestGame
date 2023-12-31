@@ -6056,10 +6056,6 @@ MonoBehaviour:
   slamForce: 1000
   jumpForce: 250
   maxJumps: 2
-  DashDistance: 40
-  DashCounter: 0
-  DashMaxCounter: 5
-  DashCooldown: 5
 --- !u!1 &159167184
 GameObject:
   m_ObjectHideFlags: 0
@@ -7706,7 +7702,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 0
-  orthographic size: 1.04
+  orthographic size: 1.1275
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

@@ -1,6 +1,10 @@
+//Factory pattern for creating and returning all playerstates.  This is a non monobehaviour class that is used directly by the player state machine.
 public class PlayerStateFactory
 {
+    //reference to a state machine
     readonly PlayerStateMachine context;
+    
+    //player states
     PlayerJumpState jumpState;
     PlayerFallingState fallState;
     PlayerRunState runState;
@@ -8,7 +12,9 @@ public class PlayerStateFactory
     PlayerIdleState idleState;
     PlayerCrouchState crouchState;
     PlayerAttackState atttackState;
+    PlayerDashState dashState;
 
+    //Construtor which requires the statemachine to provide a context
     public PlayerStateFactory(PlayerStateMachine currentContext)
     {
         context = currentContext;
@@ -19,7 +25,10 @@ public class PlayerStateFactory
         idleState = new PlayerIdleState(context, this);
         crouchState = new PlayerCrouchState(context, this);
         atttackState = new PlayerAttackState(context, this);
+        dashState = new PlayerDashState(context, this);    
     }
+
+    //State Getters - these are used by the playerstatemachine and other states to set our states
     public PlayerBaseState Fall()
     {
         return fallState;
@@ -53,5 +62,10 @@ public class PlayerStateFactory
     public PlayerBaseState Crouch()
     {
         return crouchState;
+    }
+
+    public PlayerDashState Dash()
+    {
+        return dashState;
     }
 }
