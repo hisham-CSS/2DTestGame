@@ -40,11 +40,6 @@ public class PlayerJumpState : PlayerBaseState
         
     }
 
-    public override void InitalizeSubState()
-    {
-
-    }
-
     public override void UpdateState()
     {
         CheckSwitchState();

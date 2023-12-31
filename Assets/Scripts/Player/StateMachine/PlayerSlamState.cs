@@ -23,11 +23,6 @@ public class PlayerSlamState : PlayerBaseState
         ctx.JumpCount = 0;
     }
 
-    public override void InitalizeSubState()
-    {
-        
-    }
-
     public override void UpdateState()
     {
         CheckSwitchState();

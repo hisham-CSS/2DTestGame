@@ -42,11 +42,6 @@ public class PlayerIdleState : PlayerBaseState
         
     }
 
-    public override void InitalizeSubState()
-    {
-        
-    }
-
     public override void UpdateState()
     {
         CheckSwitchState();
