@@ -7,9 +7,8 @@ public class PlayerAttackState : PlayerBaseState
     {
         AnimatorStateInfo stateInfo = ctx.Anim.GetCurrentAnimatorStateInfo(0);
         if (stateInfo.normalizedTime > 1)
-        {
-            AnimatorClipInfo[] clipInfo = ctx.Anim.GetCurrentAnimatorClipInfo(0);
-            if (clipInfo[0].clip.name.Contains(ctx.AttackNumber.ToString()))
+        {   
+            if (stateInfo.IsName("Attack" + ctx.AttackNumber))
             {
                 ctx.AttackNumber = 0;
                 ctx.AttackWindow = true;
