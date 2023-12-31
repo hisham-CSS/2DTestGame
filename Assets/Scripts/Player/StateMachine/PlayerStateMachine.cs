@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
@@ -77,11 +78,18 @@ public class PlayerStateMachine : MonoBehaviour
     //Jetpack Variables
     int jetpackFuel = 100;
     public int JetpackFuel { get => jetpackFuel; set => jetpackFuel = value; }
-
+    
     //Store current state and the factory that makes the states
     PlayerBaseState currentState;
     PlayerStateFactory states;
 
+    public TMP_Text jetpackFuelTEXT;
+    
+    public TMP_Text JETPACKDISPLAY
+    {
+        get => jetpackFuelTEXT;
+        set => jetpackFuelTEXT = value;
+    }
     public PlayerBaseState GetCurrentState()
     {
         return currentState;
