@@ -85,11 +85,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     public TMP_Text jetpackFuelTEXT;
     
-    public TMP_Text JETPACKDISPLAY
-    {
-        get => jetpackFuelTEXT;
-        set => jetpackFuelTEXT = value;
-    }
     public PlayerBaseState GetCurrentState()
     {
         return currentState;
@@ -209,6 +204,9 @@ public class PlayerStateMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        jetpackFuelTEXT.text = jetpackFuel.ToString();
+      
+
         //isGrounded still needs to be checked every tick
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
 

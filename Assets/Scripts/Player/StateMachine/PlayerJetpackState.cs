@@ -32,6 +32,5 @@ public class PlayerJetpackState : PlayerBaseState
         CheckSwitchState();
         ctx.Rb.velocity = new Vector2(ctx.Rb.velocity.x, 2);
         ctx.JetpackFuel--;
-        ctx.JETPACKDISPLAY.text = ctx.JetpackFuel.ToString();
     }
 }
