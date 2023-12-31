@@ -40,6 +40,7 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void EnterState()
     {
+        ctx.JumpCount = 0;
         ctx.Anim.Play(idleClip);
     }
 

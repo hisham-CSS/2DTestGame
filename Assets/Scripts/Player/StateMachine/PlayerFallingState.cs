@@ -12,7 +12,6 @@ public class PlayerFallingState : PlayerBaseState
         if (ctx.IsGrounded)
         {
             SwitchState(factory.Idle());
-            ctx.JumpCount = 0;
             return;
         }
 

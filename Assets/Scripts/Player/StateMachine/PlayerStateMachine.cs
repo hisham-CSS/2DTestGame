@@ -60,13 +60,13 @@ public class PlayerStateMachine : MonoBehaviour
 
 
     //Dash Variables
-    float dashDistance = 40;
+    [SerializeField] float dashDistance = 40;
     public float DashDistance => dashDistance;
     
     int dashCounter = 0;
-    public int DashCounter => dashCounter;
-    
-    int dashMaxCounter = 5;
+    public int DashCounter { get => dashCounter; set => dashCounter = value; }
+
+    [SerializeField] int dashMaxCounter = 5;
     public int DashMaxCounter => dashMaxCounter;
     
     int dashCooldown = 5;
@@ -198,6 +198,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         //isGrounded still needs to be checked every tick
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
+
         //our states update function is called here to tie it to the state machines update function
         currentState.UpdateState();
     }
@@ -230,5 +231,10 @@ public class PlayerStateMachine : MonoBehaviour
     {
         //TODO turn on the appropriate collider for our attack depending on the attack animation we are in
         attackWindow = true;
+    }
+
+    public void DashStart()
+    {
+        
     }
 }
