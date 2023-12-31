@@ -42,9 +42,11 @@ public class InputManager : MonoBehaviour
         input.Player.Move.canceled += Move;
 
         input.Player.Jump.started += Jump;
+        input.Player.Jump.performed += Jump;
         input.Player.Jump.canceled += Jump;
 
         input.Player.Attack.started += Attack;
+        input.Player.Attack.performed += Attack;
         input.Player.Attack.canceled += Attack;
 
         input.Player.Dash.started += Dash;
@@ -62,9 +64,11 @@ public class InputManager : MonoBehaviour
         input.Player.Move.canceled -= Move;
 
         input.Player.Jump.started -= Jump;
+        input.Player.Jump.performed -= Jump;
         input.Player.Jump.canceled -= Jump;
 
         input.Player.Attack.started -= Attack;
+        input.Player.Attack.performed -= Attack;
         input.Player.Attack.canceled -= Attack;
 
         input.Player.Dash.started -= Dash;

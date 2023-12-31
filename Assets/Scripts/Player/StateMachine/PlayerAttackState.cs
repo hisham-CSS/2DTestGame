@@ -40,6 +40,7 @@ public class PlayerAttackState : PlayerBaseState
     {
         CheckSwitchState();
 
+        Debug.Log(ctx.AttackPressed);
         if (ctx.AttackWindow && ctx.AttackPressed)
         {
             AnimatorClipInfo[] clipInfo = ctx.Anim.GetCurrentAnimatorClipInfo(0);
