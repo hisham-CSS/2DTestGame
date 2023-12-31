@@ -44,6 +44,8 @@ public class PlayerDashState : PlayerBaseState
 
         float dir = ctx.Sr.flipX ? -1 : 1;
 
+        ctx.Rb.velocity = new Vector2(0, 0);
+
         ctx.Rb.AddForce(new Vector2(ctx.DashDistance * dir, 0));
 
         ctx.Anim.Play(dashClip, -1, 0.0f);
