@@ -77,7 +77,15 @@ public class PlayerStateMachine : MonoBehaviour
 
     //Jetpack Variables
     int jetpackFuel = 100;
-    public int JetpackFuel { get => jetpackFuel; set => jetpackFuel = value; }
+    public int JetpackFuel 
+    {
+        get => jetpackFuel;
+        set
+        {
+            jetpackFuel = value;
+            jetpackFuelTEXT.text = jetpackFuel.ToString();
+        } 
+    }
     
     //Store current state and the factory that makes the states
     PlayerBaseState currentState;
@@ -216,7 +224,7 @@ public class PlayerStateMachine : MonoBehaviour
         if (isGrounded && jetpackFuel < 100)
         {
             jetpackFuel++;
-            Debug.Log(jetpackFuel);
+            //Debug.Log(jetpackFuel);
         }
     }
 

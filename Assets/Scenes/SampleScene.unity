@@ -1192,7 +1192,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &62852035
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7977,7 +7977,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 0
-  orthographic size: 1.0375
+  orthographic size: 1.04
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

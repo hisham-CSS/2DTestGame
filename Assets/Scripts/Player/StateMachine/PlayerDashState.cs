@@ -20,6 +20,11 @@ public class PlayerDashState : PlayerBaseState
             SwitchState(factory.Idle());
             return;
         }
+        //else
+        //{
+        //    if (ctx.DashPressed)
+        //        HandleDash();
+        //}
         
 
         if (ctx.AttackPressed && ctx.IsGrounded)
