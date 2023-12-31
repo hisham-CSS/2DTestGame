@@ -24,6 +24,7 @@ public class PlayerSlamState : PlayerBaseState
     public override void ExitState()
     {
         ctx.JumpCount = 0;
+        ctx.SlamSpeedChange();
     }
 
     public override void UpdateState()

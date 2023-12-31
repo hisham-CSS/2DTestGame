@@ -20,9 +20,10 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] float groundCheckRadius = 0.02f;
     [SerializeField] bool isGrounded = false;
     public bool IsGrounded { get => isGrounded; }
-    
+
 
     //Move Variables
+    Coroutine speedChange = null;
     [SerializeField] float speed = 10.0f;
     float moveX;
     float inputY;
@@ -81,11 +82,11 @@ public class PlayerStateMachine : MonoBehaviour
     {
         return currentState;
     }
-
     public void SetCurrentState(PlayerBaseState value)
     {
         currentState = value;
     }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -178,13 +179,6 @@ public class PlayerStateMachine : MonoBehaviour
     void Dash(bool isPressed)
     {
         dashPressed = isPressed;
-
-        //DashCounter++;
-        //float dir = sr.flipX ? -1 : 1;
-        //if (DashCounter >= DashMaxCounter) return;
-        //if (isGrounded) return;
-        //if (DashCounter < DashMaxCounter)
-        //    rb.AddForce(new Vector2(DashDistance * dir, 0));
     }
 
     //set our attack input
@@ -209,6 +203,21 @@ public class PlayerStateMachine : MonoBehaviour
         rb.velocity = (currentState == states.Run() || currentState == states.Jump() || currentState == states.Fall()) ? new Vector2(moveX, rb.velocity.y) : new Vector2(0, rb.velocity.y);
     }
 
+    //Slam change stuff
+    public void SlamSpeedChange()
+    {
+        if (speedChange == null)
+            speedChange = StartCoroutine(SpeedChange());
+    }
+
+    IEnumerator SpeedChange()
+    {
+        speed *= 2;
+        yield return new WaitForSeconds(1.0f);
+        speed /= 2;
+        speedChange = null;
+    }
+
     //ANIMATION EVENTS THAT CANNOT BE REMOVED FROM THE STATE MACHINE
     //Animation event on first frame of the attack
     public void AttackStart()
@@ -231,10 +240,5 @@ public class PlayerStateMachine : MonoBehaviour
     {
         //TODO turn on the appropriate collider for our attack depending on the attack animation we are in
         attackWindow = true;
-    }
-
-    public void DashStart()
-    {
-        
     }
 }
