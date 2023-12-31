@@ -50,6 +50,7 @@ public class InputManager : MonoBehaviour
         input.Player.Attack.canceled += Attack;
 
         input.Player.Dash.started += Dash;
+        input.Player.Dash.performed += Dash;
         input.Player.Dash.canceled += Dash;
 
         input.Player.Jetpack.started += JetPack;
@@ -72,6 +73,7 @@ public class InputManager : MonoBehaviour
         input.Player.Attack.canceled -= Attack;
 
         input.Player.Dash.started -= Dash;
+        input.Player.Dash.performed -= Dash;
         input.Player.Dash.canceled -= Dash;
 
         input.Player.Jetpack.started -= JetPack;

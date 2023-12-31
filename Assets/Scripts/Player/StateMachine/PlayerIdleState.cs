@@ -26,6 +26,12 @@ public class PlayerIdleState : PlayerBaseState
             return;
         }
 
+        if (ctx.DashPressed)
+        {
+            SwitchState(factory.Dash());
+            return;
+        }
+
         if (Mathf.Abs(ctx.moveInput.x) > 0)
         {
             SwitchState(factory.Run());
