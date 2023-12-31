@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b3ac8d6-d76f-4a30-beb1-51f1ee0bfc6c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/TleMap_Assets/Background_2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TleMap_Assets/Background_2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.2DTestGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2DTestGame/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main Menu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +19,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BacGround/scrollingbackground.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Transition.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.7.0/InputSystem/Utilities/DelegateHelpers.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
@@ -98,7 +101,7 @@
       <workItem from="1703897537992" duration="49000" />
       <workItem from="1703897600228" duration="4336000" />
       <workItem from="1703945965504" duration="4777000" />
-      <workItem from="1703965406520" duration="3291000" />
+      <workItem from="1703965406520" duration="5571000" />
     </task>
     <servers />
   </component>
