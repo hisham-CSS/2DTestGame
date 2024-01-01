@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerDashState : PlayerBaseState
 {
     readonly string dashClip = "Dash";
+    int prevDashCounter;
 
     public PlayerDashState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) { }
     public override void CheckSwitchState()
@@ -20,19 +21,12 @@ public class PlayerDashState : PlayerBaseState
             SwitchState(factory.Idle());
             return;
         }
-        //else
-        //{
-        //    if (ctx.DashPressed)
-        //        HandleDash();
-        //}
         
-
         if (ctx.AttackPressed && ctx.IsGrounded)
         {
             SwitchState(factory.Attack());
             return;
         }
- 
     }
 
     public override void EnterState()
@@ -42,28 +36,28 @@ public class PlayerDashState : PlayerBaseState
 
     public override void ExitState()
     {
+        //ctx.ActivateDashCooldown();
         ctx.DashCounter = 0;
+        prevDashCounter = 0;
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
+        
+        if (ctx.DashPressed)
+            HandleDash();
     }
 
     void HandleDash()
     {
-        ctx.DashCounter++;
-
-        Debug.Log(ctx.DashCounter);
-
-        if (ctx.DashCounter >= ctx.DashMaxCounter) return;
-
+        if (ctx.DashCooldown) return;
+        if (ctx.DashCounter <= prevDashCounter) return;
+        prevDashCounter = ctx.DashCounter;
+        if (ctx.DashCounter > ctx.DashMaxCounter) return;
         float dir = ctx.Sr.flipX ? -1 : 1;
-
         ctx.Rb.velocity = new Vector2(0, 0);
-
         ctx.Rb.AddForce(new Vector2(ctx.DashDistance * dir, 0));
-
         ctx.Anim.Play(dashClip, -1, 0.0f);
     }
 }

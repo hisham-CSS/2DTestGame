@@ -63,17 +63,16 @@ public class PlayerStateMachine : MonoBehaviour
     public bool JetpackPressed => jetpackPressed;
 
     //Dash Variables
+    Coroutine dash = null;
     [SerializeField] float dashDistance = 40;
     public float DashDistance => dashDistance;
-    
     int dashCounter = 0;
     public int DashCounter { get => dashCounter; set => dashCounter = value; }
-
     [SerializeField] int dashMaxCounter = 5;
     public int DashMaxCounter => dashMaxCounter;
-    
-    int dashCooldown = 5;
-    public int DashCooldown => dashCooldown;
+    [SerializeField] float dashCooldownTimer = 5.0f;
+    bool dashCooldown = false;
+    public bool DashCooldown => dashCooldown;
 
     //Jetpack Variables
     int jetpackFuel = 100;
@@ -195,6 +194,8 @@ public class PlayerStateMachine : MonoBehaviour
     void Dash(bool isPressed)
     {
         dashPressed = isPressed;
+        if (dashPressed)
+            dashCounter++;
     }
 
     //set our attack input
@@ -232,6 +233,28 @@ public class PlayerStateMachine : MonoBehaviour
     {
         //if we are running/jumping/falling/jetpack = we can move left or right - otherwise we do not move left or right
         rb.velocity = (currentState == states.Run() || currentState == states.Jump() || currentState == states.Fall() || currentState == states.Jetpack()) ? new Vector2(moveX, rb.velocity.y) : new Vector2(0, rb.velocity.y);
+    }
+
+    //Dash cooldown stuff
+    public void ActivateDashCooldown()
+    {
+        if (dash == null)
+        {
+            dash = StartCoroutine(StartDashCooldown());
+        }
+        else
+        {
+            dashCooldown = false;
+            StopCoroutine(dash);
+            dash = StartCoroutine(StartDashCooldown());
+        }
+    }
+
+    IEnumerator StartDashCooldown()
+    {
+        dashCooldown = true;
+        yield return new WaitForSeconds(dashCooldownTimer);
+        dashCooldown = false;
     }
 
     //Slam change stuff

@@ -96,14 +96,7 @@ public class InputManager : MonoBehaviour
     
     void Dash(InputAction.CallbackContext ctx)
     {
-        if (ctx.phase == InputActionPhase.Started)
-        {
-            OnPlayerDash?.Invoke(true);
-            return;
-        }
-
-        OnPlayerDash?.Invoke(false);
-
+        OnPlayerDash?.Invoke(ctx.ReadValueAsButton());
     }
 
     void JetPack(InputAction.CallbackContext ctx)
