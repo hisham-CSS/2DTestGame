@@ -98,9 +98,12 @@ public class PlayerStateMachine : MonoBehaviour
     //Store current state and the factory that makes the states
     PlayerBaseState currentState;
     PlayerStateFactory states;
-
+    //text bindings variables
     public TMP_Text jetpackFuelTEXT;
     public TMP_Text stateIn;
+    public TMP_Text DashCountertext;
+    public TMP_Text MaxDashCounter;
+
     public PlayerBaseState GetCurrentState()
     {
         return currentState;
@@ -222,8 +225,11 @@ public class PlayerStateMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Update the text bindings
         stateIn.text = currentState.ToString();
         jetpackFuelTEXT.text = jetpackFuel.ToString();
+        DashCountertext.text = DashCounter.ToString();
+        MaxDashCounter.text = DashMaxCounter.ToString();
         
         //isGrounded still needs to be checked every tick
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
