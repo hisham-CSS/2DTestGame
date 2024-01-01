@@ -72,7 +72,16 @@ public class PlayerStateMachine : MonoBehaviour
     public int DashMaxCounter => dashMaxCounter;
     [SerializeField] float dashCooldownTimer = 5.0f;
     bool dashCooldown = false;
-    public bool DashCooldown => dashCooldown;
+    public bool DashCooldown
+    {
+        get => dashCooldown;
+        set
+        {
+            dashCooldown = value;
+            if (dashCooldown && dash == null)
+                dash = StartCoroutine(StartDashCooldown());
+        }
+    }
 
     //Jetpack Variables
     int jetpackFuel = 100;
@@ -216,7 +225,6 @@ public class PlayerStateMachine : MonoBehaviour
         stateIn.text = currentState.ToString();
         jetpackFuelTEXT.text = jetpackFuel.ToString();
         
-
         //isGrounded still needs to be checked every tick
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
 
@@ -237,25 +245,12 @@ public class PlayerStateMachine : MonoBehaviour
     }
 
     //Dash cooldown stuff
-    public void ActivateDashCooldown()
-    {
-        if (dash == null)
-        {
-            dash = StartCoroutine(StartDashCooldown());
-        }
-        else
-        {
-            dashCooldown = false;
-            StopCoroutine(dash);
-            dash = StartCoroutine(StartDashCooldown());
-        }
-    }
-
     IEnumerator StartDashCooldown()
     {
-        dashCooldown = true;
         yield return new WaitForSeconds(dashCooldownTimer);
         dashCooldown = false;
+        dash = null;
+        dashCounter = 0;
     }
 
     //Slam change stuff

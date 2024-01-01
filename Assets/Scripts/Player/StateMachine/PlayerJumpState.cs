@@ -22,7 +22,7 @@ public class PlayerJumpState : PlayerBaseState
             return;
         }
 
-        if (ctx.DashPressed)
+        if (ctx.DashPressed && !ctx.DashCooldown)
         {
             SwitchState(factory.Dash());
             return;

@@ -6058,7 +6058,7 @@ MonoBehaviour:
   maxJumps: 2
   dashDistance: 5000
   dashMaxCounter: 5
-  dashCooldownTimer: 5
+  dashCooldownTimer: 1
   jetpackFuelTEXT: {fileID: 306592634}
   stateIn: {fileID: 1815750982}
 --- !u!1 &159167184
@@ -8115,7 +8115,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 0
-  orthographic size: 1.0375
+  orthographic size: 1.04
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

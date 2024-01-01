@@ -36,7 +36,7 @@ public class PlayerDashState : PlayerBaseState
 
     public override void ExitState()
     {
-        //ctx.ActivateDashCooldown();
+        ctx.DashCooldown = true;
         ctx.DashCounter = 0;
         prevDashCounter = 0;
     }
