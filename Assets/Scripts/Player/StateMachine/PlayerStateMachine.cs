@@ -67,7 +67,20 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] float dashDistance = 40;
     public float DashDistance => dashDistance;
     int dashCounter = 0;
-    public int DashCounter { get => dashCounter; set => dashCounter = value; }
+    public int DashCounter 
+    { 
+        get => dashCounter;
+        set
+        {
+            dashCounter = value;
+            if (dashCounter > dashMaxCounter)
+            {
+                DashCountertext.text = dashMaxCounter.ToString();
+                return;
+            }
+            DashCountertext.text = dashCounter.ToString();
+        }
+    }
     [SerializeField] int dashMaxCounter = 5;
     public int DashMaxCounter => dashMaxCounter;
     [SerializeField] float dashCooldownTimer = 5.0f;
@@ -98,6 +111,13 @@ public class PlayerStateMachine : MonoBehaviour
     //Store current state and the factory that makes the states
     PlayerBaseState currentState;
     PlayerStateFactory states;
+
+    //Attack Hitboxes
+    [SerializeField] BoxCollider2D attack1Hitbox;
+    [SerializeField] BoxCollider2D attack2Hitbox;
+    [SerializeField] BoxCollider2D attack3Hitbox;
+    [SerializeField] ContactFilter2D enemyFilter2D;
+
     //text bindings variables
     public TMP_Text jetpackFuelTEXT;
     public TMP_Text stateIn;
@@ -111,6 +131,8 @@ public class PlayerStateMachine : MonoBehaviour
     public void SetCurrentState(PlayerBaseState value)
     {
         currentState = value;
+        //Update the text bindings
+        stateIn.text = currentState.ToString();
     }
 
     // Start is called before the first frame update
@@ -206,8 +228,8 @@ public class PlayerStateMachine : MonoBehaviour
     void Dash(bool isPressed)
     {
         dashPressed = isPressed;
-        if (dashPressed)
-            dashCounter++;
+        if (dashPressed && !dashCooldown)
+            DashCounter++;
     }
 
     //set our attack input
@@ -222,15 +244,15 @@ public class PlayerStateMachine : MonoBehaviour
         jetpackPressed = isPressed;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        //Update the text bindings
-        stateIn.text = currentState.ToString();
-        jetpackFuelTEXT.text = jetpackFuel.ToString();
-        DashCountertext.text = DashCounter.ToString();
         MaxDashCounter.text = DashMaxCounter.ToString();
         
+    }
+
+    // Update is called once per frame
+    void Update()
+    {        
         //isGrounded still needs to be checked every tick
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
 
@@ -241,6 +263,33 @@ public class PlayerStateMachine : MonoBehaviour
         {
             jetpackFuel++;
             //Debug.Log(jetpackFuel);
+        }
+
+        //collision detection
+        if (attackWindow)
+        {
+            AnimatorClipInfo[] clipInfo = anim.GetCurrentAnimatorClipInfo(0);
+            if (!clipInfo[0].clip.name.Contains("Attack")) return;
+            //float dir = sr.flipX ? -1 : 1;
+            //attack1Hitbox.gameObject.transform.position = new Vector2(attack1Hitbox.transform.position.x * dir, attack1Hitbox.transform.position.y);
+            //attack2Hitbox.gameObject.transform.position = new Vector2(attack1Hitbox.transform.position.x * dir, attack1Hitbox.transform.position.y);
+            //attack3Hitbox.gameObject.transform.position = new Vector2(attack1Hitbox.transform.position.x * dir, attack1Hitbox.transform.position.y);
+
+            List<Collider2D> collisionResults = new List<Collider2D>();
+
+            if (clipInfo[0].clip.name == "Attack1")
+                attack1Hitbox.OverlapCollider(enemyFilter2D, collisionResults);
+            if (clipInfo[0].clip.name == "Attack2")
+                attack2Hitbox.OverlapCollider(enemyFilter2D, collisionResults);
+            if (clipInfo[0].clip.name == "Attack3")
+                attack3Hitbox.OverlapCollider(enemyFilter2D, collisionResults);
+
+            if (collisionResults.Count == 0) return;
+
+            foreach (Collider2D col in collisionResults)
+            {
+                Debug.Log("Collision Working!");
+            }
         }
     }
 

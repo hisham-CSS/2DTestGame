@@ -8,11 +8,16 @@ public class PlayerJetpackState : PlayerBaseState
 
     public override void CheckSwitchState()
     {
-        //if we release jetpack button exit state - TODO: add a fuel variable to depelete over time while in jetpack state
+        //if we release jetpack button exit state
         if (!ctx.JetpackPressed || ctx.JetpackFuel <= 0)
         {           
             SwitchState(factory.Fall());
             return;   
+        }
+
+        if (ctx.DashPressed && !ctx.DashCooldown)
+        {
+            SwitchState(factory.Dash());
         }
     }
 

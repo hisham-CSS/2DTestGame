@@ -10,17 +10,19 @@ public class PlayerAttackState : PlayerBaseState
         {   
             if (stateInfo.IsName("Attack" + ctx.AttackNumber))
             {
-                ctx.AttackNumber = 0;
-                ctx.AttackWindow = true;
-                attackClip = "Attack1";
                 SwitchState(factory.Idle());
+                return;
             }
-            else
-            {
-                //2 or 3 to the end of the attackClip string
-                attackClip = "Attack" + ctx.AttackNumber.ToString();
-                ctx.Anim.Play(attackClip);
-            }
+            
+            //2 or 3 to the end of the attackClip string
+            attackClip = "Attack" + ctx.AttackNumber.ToString();
+            ctx.Anim.Play(attackClip);
+            return;
+        }
+
+        if (ctx.DashPressed && !ctx.DashCooldown)
+        {
+            SwitchState(factory.Dash());
         }
     }
 
@@ -33,14 +35,16 @@ public class PlayerAttackState : PlayerBaseState
 
     public override void ExitState()
     {
-       
+        ctx.AttackNumber = 0;
+        ctx.AttackWindow = true;
+        attackClip = "Attack1";
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
 
-        Debug.Log(ctx.AttackPressed);
+        //Debug.Log(ctx.AttackPressed);
         if (ctx.AttackWindow && ctx.AttackPressed)
         {
             AnimatorClipInfo[] clipInfo = ctx.Anim.GetCurrentAnimatorClipInfo(0);

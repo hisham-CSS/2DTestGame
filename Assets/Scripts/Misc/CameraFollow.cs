@@ -11,7 +11,8 @@ public class CameraFollow : MonoBehaviour
 
     public Transform target;
     private Vector3 vel = Vector3.zero;
-    private void FixedUpdate()
+    //per unity's documentation - camera movement should be done in LateUpdate
+    private void LateUpdate()
     {
         Vector3 targetpos = target.position + offset;
         targetpos.z = transform.position.z;
