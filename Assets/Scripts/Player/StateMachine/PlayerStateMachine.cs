@@ -84,7 +84,7 @@ public class PlayerStateMachine : MonoBehaviour
     }
 
     //Jetpack Variables
-    int jetpackFuel = 100;
+   public int jetpackFuel = 7000;
     public int JetpackFuel 
     {
         get => jetpackFuel;
@@ -237,7 +237,7 @@ public class PlayerStateMachine : MonoBehaviour
         //our states update function is called here to tie it to the state machines update function
         currentState.UpdateState();
 
-        if (isGrounded && jetpackFuel < 100)
+        if (isGrounded && jetpackFuel < 7000)
         {
             jetpackFuel++;
             //Debug.Log(jetpackFuel);
