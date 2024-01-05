@@ -6431,7 +6431,7 @@ MonoBehaviour:
   dashDistance: 5000
   dashMaxCounter: 5
   dashCooldownTimer: 1
-  jetpackFuel: 50000
+  jetpackFuel: 200
   jetpackFuelTEXT: {fileID: 306592634}
   stateIn: {fileID: 1815750982}
   DashCountertext: {fileID: 1069031135}
