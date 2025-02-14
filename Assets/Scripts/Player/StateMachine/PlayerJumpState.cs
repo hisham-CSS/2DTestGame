@@ -10,7 +10,7 @@ public class PlayerJumpState : PlayerBaseState
     public PlayerJumpState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) { }
     public override void CheckSwitchState()
     {
-        if (ctx.Rb.velocity.y < 0)
+        if (ctx.Rb.linearVelocity.y < 0)
         {
             SwitchState(factory.Fall());
             return;
@@ -49,7 +49,7 @@ public class PlayerJumpState : PlayerBaseState
 
     void HandleJump()
     {
-        ctx.Rb.velocity = new Vector2(ctx.Rb.velocity.x, 0);
+        ctx.Rb.linearVelocity = new Vector2(ctx.Rb.linearVelocity.x, 0);
         ctx.Rb.AddForce(Vector2.up * ctx.JumpForce);
     }
 

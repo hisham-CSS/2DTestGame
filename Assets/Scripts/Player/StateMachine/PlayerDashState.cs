@@ -13,7 +13,7 @@ public class PlayerDashState : PlayerBaseState
         AnimatorStateInfo stateInfo = ctx.Anim.GetCurrentAnimatorStateInfo(0);        
         if (stateInfo.normalizedTime > 1)
         {
-            if (ctx.Rb.velocity.y < 0)
+            if (ctx.Rb.linearVelocity.y < 0)
             {
                 SwitchState(factory.Fall());
                 return;
@@ -56,7 +56,7 @@ public class PlayerDashState : PlayerBaseState
         prevDashCounter = ctx.DashCounter;
         if (ctx.DashCounter > ctx.DashMaxCounter) return;
         float dir = ctx.Sr.flipX ? -1 : 1;
-        ctx.Rb.velocity = new Vector2(0, 0);
+        ctx.Rb.linearVelocity = new Vector2(0, 0);
         ctx.Rb.AddForce(new Vector2(ctx.DashDistance * dir, 0));
         ctx.Anim.Play(dashClip, -1, 0.0f);
     }

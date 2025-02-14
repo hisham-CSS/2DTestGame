@@ -248,7 +248,7 @@ public class PlayerStateMachine : MonoBehaviour
     void FixedUpdate()
     {
         //if we are running/jumping/falling/jetpack = we can move left or right - otherwise we do not move left or right
-        rb.velocity = (currentState == states.Run() || currentState == states.Jump() || currentState == states.Fall() || currentState == states.Jetpack()) ? new Vector2(moveX, rb.velocity.y) : new Vector2(0, rb.velocity.y);
+        rb.linearVelocity = (currentState == states.Run() || currentState == states.Jump() || currentState == states.Fall() || currentState == states.Jetpack()) ? new Vector2(moveX, rb.linearVelocity.y) : new Vector2(0, rb.linearVelocity.y);
     }
 
     //Dash cooldown stuff

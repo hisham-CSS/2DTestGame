@@ -30,7 +30,7 @@ public class PlayerJetpackState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchState();
-        ctx.Rb.velocity = new Vector2(ctx.Rb.velocity.x, 10);
+        ctx.Rb.linearVelocity = new Vector2(ctx.Rb.linearVelocity.x, 10);
         ctx.JetpackFuel--;
         if (ctx.JetpackFuel < 0)
             ctx.JetpackFuel = 0;

@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
         if (jumpCount >= maxJumps) return;
 
         //stop movement on the y-axis before adding force again
-        rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
 
         rb.AddForce(Vector2.up * jumpForce);
     }
@@ -285,7 +285,7 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
 
         //if we aren't grounded - we are either falling or jumping
-        if (!isGrounded) myState = rb.velocity.y > 0 ? PlayerState.Jump : PlayerState.Falling;
+        if (!isGrounded) myState = rb.linearVelocity.y > 0 ? PlayerState.Jump : PlayerState.Falling;
 
         //if we are grounded - we are either idle or running
         if (isGrounded)
@@ -307,7 +307,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //if we are running/jumping/falling = we can move left or right - otherwise we do not move left or right
-        rb.velocity = (myState == PlayerState.Run || myState == PlayerState.Jump || myState == PlayerState.Falling) ? new Vector2(moveX, rb.velocity.y) : new Vector2(0, rb.velocity.y);
+        rb.linearVelocity = (myState == PlayerState.Run || myState == PlayerState.Jump || myState == PlayerState.Falling) ? new Vector2(moveX, rb.linearVelocity.y) : new Vector2(0, rb.linearVelocity.y);
     }
 
     //Check to see which animation to play.
